@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upkeep", "Upkeep\Upkeep.csproj", "{B1FBBBB2-BA71-4F55-B03D-4D682AAF22DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1FBBBB2-BA71-4F55-B03D-4D682AAF22DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FBBBB2-BA71-4F55-B03D-4D682AAF22DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FBBBB2-BA71-4F55-B03D-4D682AAF22DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FBBBB2-BA71-4F55-B03D-4D682AAF22DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE982E21-02D1-49BB-A73D-DA21CD566B8D}
+	EndGlobalSection
+EndGlobal
