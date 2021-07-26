@@ -8,11 +8,11 @@ namespace Upkeep.Models
 {
     public class Equipment
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(255)]
-        public string type { get; set; }
+        public string Type { get; set; }
 
         [Required]
         [MaxLength(255)]
@@ -22,7 +22,7 @@ namespace Upkeep.Models
         [MaxLength(255)]
         public string Model { get; set; }
 
-        public int Hours { get; set; }
+        public int? Hours { get; set; }
         
         public string Notes { get; set; }
 
