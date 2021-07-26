@@ -21,8 +21,8 @@ namespace Upkeep.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.firebaseUserId, u.name, u.email, u.phone
-                          FROM User u
+                        SELECT u.Id, u.firebaseUserId, u.[name], u.email, u.phone
+                          FROM [User] u
                          WHERE u.Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);

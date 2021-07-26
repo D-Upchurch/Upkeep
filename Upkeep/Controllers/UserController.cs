@@ -26,7 +26,7 @@ namespace Upkeep.Controllers
             return Ok(_userRepository.GetByFirebaseUserId(firebaseUserId));
         }
 
-        [HttpGet("User/{id}")]
+        [HttpGet("userId/{id}")]
         public IActionResult Get(int id)
         {
             var user = _userRepository.GetById(id);
