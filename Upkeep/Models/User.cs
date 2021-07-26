@@ -23,6 +23,6 @@ namespace Upkeep.Models
 
         [Required]
         [MaxLength(11)]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
     }
 }
