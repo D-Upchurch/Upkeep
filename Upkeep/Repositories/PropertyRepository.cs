@@ -20,8 +20,10 @@ namespace Upkeep.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT p.id, p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId
+                    SELECT p.id, p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId,
+                           u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Property p
+                    LEFT JOIN [User] u ON p.userId = u.[Id]
                     WHERE p.userId = @userId
                     ";
                     DbUtils.AddParameter(cmd, "@userId", userId);
@@ -41,7 +43,15 @@ namespace Upkeep.Repositories
                             LastService = DbUtils.GetDateTime(reader, "lastService"),
                             Notes = DbUtils.GetNullableString(reader, "notes"),
                             Image = DbUtils.GetString(reader, "image"),
-                            UserId = DbUtils.GetInt(reader, "userId")
+                            UserId = DbUtils.GetInt(reader, "userId"),
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
                         });
                     }
 
@@ -60,8 +70,10 @@ namespace Upkeep.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT p.id, p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId
+                    SELECT p.[id], p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId,
+                           u.[Id] AS [UsersId], u.[Name] as [UserName], u.[email], u.[phone], u.firebaseUserId
                     FROM Property p
+                    LEFT JOIN [User] u ON p.userId = u.[Id]
                     WHERE p.Id = @id
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -80,7 +92,15 @@ namespace Upkeep.Repositories
                             LastService = DbUtils.GetDateTime(reader, "lastService"),
                             Notes = DbUtils.GetNullableString(reader, "notes"),
                             Image = DbUtils.GetString(reader, "image"),
-                            UserId = DbUtils.GetInt(reader, "userId")
+                            UserId = DbUtils.GetInt(reader, "userId"),
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
                         };
                     }
                     reader.Close();
@@ -160,6 +180,56 @@ namespace Upkeep.Repositories
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Property> Search(string criterion)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT p.id, p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId,
+                           u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
+                    FROM Property p
+                    LEFT JOIN [User] u ON p.userId = u.[Id]
+                    WHERE (p.address LIKE @Criterion) OR (p.[name] LIKE @Criterion) 
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    var reader = cmd.ExecuteReader();
+
+                    var properties = new List<Property>();
+
+                    while (reader.Read())
+                    {
+                        properties.Add(new Property()
+                        {
+                            Id = DbUtils.GetInt(reader, "id"),
+                            Name = DbUtils.GetString(reader, "name"),
+                            Address = DbUtils.GetString(reader, "address"),
+                            ServiceCharge = DbUtils.GetInt(reader, "serviceCharge"),
+                            LastService = DbUtils.GetDateTime(reader, "lastService"),
+                            Notes = DbUtils.GetNullableString(reader, "notes"),
+                            Image = DbUtils.GetString(reader, "image"),
+                            UserId = DbUtils.GetInt(reader, "userId"),
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return properties;
                 }
             }
         }

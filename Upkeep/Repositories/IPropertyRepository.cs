@@ -10,5 +10,6 @@ namespace Upkeep.Repositories
         List<Property> GetPropertiesByUserId(int userId);
         Property GetPropertyById(int id);
         void Update(Property property);
+        List<Property> Search(string criterion);
     }
 }

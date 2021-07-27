@@ -21,7 +21,7 @@ namespace Upkeep.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public int Type { get; set; }
+        public bool Type { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
