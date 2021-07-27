@@ -20,8 +20,10 @@ namespace Upkeep.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT e.Id, e.Type, e.Make, e.Model, e.Hours, e.Notes, e.UserId, e.Image
+                    SELECT e.Id, e.Type, e.Make, e.Model, e.Hours, e.Notes, e.UserId, e.Image,
+                                   u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Equipment e
+                    LEFT JOIN [User] u ON e.UserId = u.Id
                     WHERE e.UserId = @userId
                     ";
                     DbUtils.AddParameter(cmd, "@userId", userId);
@@ -40,8 +42,16 @@ namespace Upkeep.Repositories
                             Model = DbUtils.GetString(reader, "Model"),
                             Hours = DbUtils.GetNullableInt(reader, "Hours"),
                             Notes = DbUtils.GetString(reader, "Notes"),
+                            Image = DbUtils.GetString(reader, "Image"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Image = DbUtils.GetString(reader, "Image")
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
                         });
                     }
 
@@ -60,8 +70,10 @@ namespace Upkeep.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT e.Id, e.Type, e.Make, e.Model, e.Hours, e.Notes, e.UserId, e.Image
+                    SELECT e.[Id], e.Type, e.Make, e.Model, e.Hours, e.Notes, e.Image, e.UserId,
+                                   u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Equipment e
+                    LEFT JOIN [User] u ON e.UserId = u.Id
                     WHERE e.Id = @Id
                     ";
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -79,8 +91,16 @@ namespace Upkeep.Repositories
                             Model = DbUtils.GetString(reader, "Model"),
                             Hours = DbUtils.GetNullableInt(reader, "Hours"),
                             Notes = DbUtils.GetString(reader, "Notes"),
+                            Image = DbUtils.GetString(reader, "Image"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            Image = DbUtils.GetString(reader, "Image")
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
                         };
                     }
                     reader.Close();
@@ -138,6 +158,7 @@ namespace Upkeep.Repositories
                     DbUtils.AddParameter(cmd, "@make", equipment.Make);
                     DbUtils.AddParameter(cmd, "@model", equipment.Model);
                     DbUtils.AddParameter(cmd, "@hours", equipment.Hours);
+                    DbUtils.AddParameter(cmd, "@notes", equipment.Notes);
                     DbUtils.AddParameter(cmd, "@image", equipment.Image);
                     DbUtils.AddParameter(cmd, "@id", equipment.Id);
 

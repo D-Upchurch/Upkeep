@@ -32,6 +32,7 @@ namespace Upkeep
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPropertyRepository, PropertyRepository>();
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

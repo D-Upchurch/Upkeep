@@ -64,5 +64,11 @@ namespace Upkeep.Controllers
             _propertyRepo.Update(property);
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public IActionResult Search(string criterion)
+        {
+            return Ok(_propertyRepo.Search(criterion));
+        }
     }
 }
