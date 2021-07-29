@@ -7,6 +7,8 @@ import { PropertyList } from './Property/PropertyList';
 import { PropertyDetails } from './Property/PropertyDetails';
 import { PropertyAddForm } from './Property/PropertyAddForm';
 import { EditProperty } from './Property/EditProperty';
+import { EquipmentList } from './Equipment/EquipmentList';
+import { EquipmentDetails } from './Equipment/EquipmentDetails';
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -18,6 +20,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <Home /> : <Redirect to="/login" />}
                 </Route>
 
+                //! Property paths
                 <Route path="/Property" exact>
                     {isLoggedIn ? <PropertyList /> : <Redirect to="/login" />}
                 </Route>
@@ -33,6 +36,23 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/Property/edit/:id">
                     {isLoggedIn ? <EditProperty /> : <Redirect to="/login" />}
                 </Route>
+
+                //! Equipment paths
+                <Route path="/Equipment" exact>
+                    {isLoggedIn ? <EquipmentList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/Equipment/details/:id" exact>
+                    {isLoggedIn ? <EquipmentDetails /> : <Redirect to="/login" />}
+                </Route>
+
+                {/* <Route path="/Equipment/Create" exact>
+                    {isLoggedIn ? <EquipmentAddForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/Equipment/edit/:id">
+                    {isLoggedIn ? <EditEquipment /> : <Redirect to="/login" />}
+                </Route> */}
 
 
                 <Route path="/login" exact>

@@ -12,7 +12,7 @@ namespace Upkeep.Repositories
     {
         public EquipmentRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Equipment> GetEquipmentByUserId(int userId)
+        public List<Equipment> GetEquipmentByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -24,9 +24,9 @@ namespace Upkeep.Repositories
                                    u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Equipment e
                     LEFT JOIN [User] u ON e.UserId = u.Id
-                    WHERE e.UserId = @userId
+                    WHERE u.firebaseUserId = @firebaseUserId
                     ";
-                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
                     var reader = cmd.ExecuteReader();
 

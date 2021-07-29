@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getPropertyById, deleteProperty, addProperty, editProperty, searchProperties, getPropertiesByFirebaseUserId } from "../../modules/propertyManager";
-import { getUserFirebaseId } from "../../modules/authManager";
+import { deleteProperty, searchProperties, getPropertiesByFirebaseUserId } from "../../modules/propertyManager";
 import Property from "./PropertyCard";
 import firebase from "firebase/app";
 import "firebase/auth";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // Display all of a User's properties
 
 export const PropertyList = () => {
-    const [userId, setUserId] = useState("");
+
     const [properties, setProperties] = useState([]);
     const history = useHistory();
 
