@@ -26,6 +26,9 @@ export default function Header({ isLoggedIn }) {
                         }
 
                     </Nav>
+
+                    //! PUT NEW NAV ITEMS HERE
+
                     <Nav navbar>
                         {isLoggedIn &&
                             <>

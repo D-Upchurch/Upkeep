@@ -19,9 +19,9 @@ export const getPropertyById = (id) => {
     })
 };
 
-export const getPropertiesByUserId = (userId) => {
+export const getPropertiesByFirebaseUserId = (firebaseUserId) => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${userId}`, {
+        return fetch(`${baseUrl}/${firebaseUserId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

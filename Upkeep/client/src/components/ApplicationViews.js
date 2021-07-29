@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Home from "./Home"
+import { PropertyList } from './Property/PropertyList';
+import { PropertyDetails } from './Property/PropertyDetails';
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -13,6 +15,24 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/" exact>
                     {isLoggedIn ? <Home /> : <Redirect to="/login" />}
                 </Route>
+
+                <Route path="/Property" exact>
+                    {isLoggedIn ? <PropertyList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/Property/details/:id" exact>
+                    {isLoggedIn ? <PropertyDetails /> : <Redirect to="/login" />}
+                </Route>
+
+                {/* <Route path="/Property/Create">
+                    {isLoggedIn ? <PropertyAddForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/Property/edit/:id">
+                    {isLoggedIn ? <EditProperty /> : <Redirect to="/login" />}
+                </Route> */}
+
+
                 <Route path="/login" exact>
                     <Login />
                 </Route>
