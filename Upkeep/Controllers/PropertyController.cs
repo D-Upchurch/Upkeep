@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Upkeep.Models;
 using Upkeep.Repositories;
@@ -14,10 +15,12 @@ namespace Upkeep.Controllers
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyRepository _propertyRepo;
+        private readonly IUserRepository _userRepository;
 
-        public PropertyController(IPropertyRepository propertyRepository)
+        public PropertyController(IPropertyRepository propertyRepository, IUserRepository userRepository)
         {
             _propertyRepo = propertyRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("details/{id}")]
@@ -42,6 +45,9 @@ namespace Upkeep.Controllers
         [HttpPost]
         public IActionResult Post(Property property)
         {
+            var currentUserProfile = GetCurrentUserProfile();
+            property.UserId = currentUserProfile.Id;
+            property.User = currentUserProfile;
             _propertyRepo.Add(property);
             return CreatedAtAction("Get", new { id = property.Id }, property);
         }
@@ -69,6 +75,12 @@ namespace Upkeep.Controllers
         public IActionResult Search(string criterion)
         {
             return Ok(_propertyRepo.Search(criterion));
+        }
+
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
