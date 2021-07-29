@@ -1,6 +1,8 @@
 import React from "react";
+import { getToken, tokenVariant } from "../modules/authManager";
 
 export default function Home() {
+
     return (
         <span style={{
             position: "fixed",

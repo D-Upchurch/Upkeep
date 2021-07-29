@@ -31,10 +31,10 @@ namespace Upkeep.Controllers
             return Ok(property);
         }
 
-        [HttpGet("{userId}")]
-        public IActionResult GetProperties(int userId)
+        [HttpGet("{firebaseUserId}")]
+        public IActionResult GetProperties(string firebaseUserId)
         {
-            List<Property> properties = _propertyRepo.GetPropertiesByUserId(userId);
+            List<Property> properties = _propertyRepo.GetPropertiesByFirebaseUserId(firebaseUserId);
 
             return Ok(properties);
         }

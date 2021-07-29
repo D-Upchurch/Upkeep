@@ -12,7 +12,7 @@ namespace Upkeep.Repositories
     {
         public PropertyRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Property> GetPropertiesByUserId(int userId)
+        public List<Property> GetPropertiesByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -24,9 +24,9 @@ namespace Upkeep.Repositories
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Property p
                     LEFT JOIN [User] u ON p.userId = u.[Id]
-                    WHERE p.userId = @userId
+                    WHERE u.firebaseUserId = @firebaseUserId
                     ";
-                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
                     var reader = cmd.ExecuteReader();
 

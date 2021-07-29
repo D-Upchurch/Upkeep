@@ -7,7 +7,7 @@ namespace Upkeep.Repositories
     {
         void Add(Property property);
         void Delete(int id);
-        List<Property> GetPropertiesByUserId(int userId);
+        List<Property> GetPropertiesByFirebaseUserId(string firebaseUserId);
         Property GetPropertyById(int id);
         void Update(Property property);
         List<Property> Search(string criterion);
