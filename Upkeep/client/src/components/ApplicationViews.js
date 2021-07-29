@@ -6,6 +6,7 @@ import Home from "./Home"
 import { PropertyList } from './Property/PropertyList';
 import { PropertyDetails } from './Property/PropertyDetails';
 import { PropertyAddForm } from './Property/PropertyAddForm';
+import { EditProperty } from './Property/EditProperty';
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -29,9 +30,9 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <PropertyAddForm /> : <Redirect to="/login" />}
                 </Route>
 
-                {/* <Route path="/Property/edit/:id">
+                <Route path="/Property/edit/:id">
                     {isLoggedIn ? <EditProperty /> : <Redirect to="/login" />}
-                </Route> */}
+                </Route>
 
 
                 <Route path="/login" exact>
