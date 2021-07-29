@@ -36,7 +36,7 @@ export const PropertyDetails = () => {
                 <CardBody>
                     <h2>Name: {property.name}</h2>
                     <h2>Address: {property.address}</h2>
-                    <p>Price: $ {property.price}</p>
+                    <p>Service Charge: ${property.serviceCharge}</p>
                     <p>Last Day Serviced: {cutDate}</p>
                     <p>Notes: {property.notes}</p>
                 </CardBody>

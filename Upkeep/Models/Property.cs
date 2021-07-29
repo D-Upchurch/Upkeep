@@ -22,6 +22,7 @@ namespace Upkeep.Models
         public int ServiceCharge { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime LastService { get; set; }
 
         public string Notes { get; set; }

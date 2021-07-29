@@ -4,12 +4,14 @@ import { getUserFirebaseId } from "../../modules/authManager";
 import Property from "./PropertyCard";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { Link, useHistory } from "react-router-dom";
 
 // Display all of a User's properties
 
 export const PropertyList = () => {
     const [userId, setUserId] = useState("");
     const [properties, setProperties] = useState([]);
+    const history = useHistory();
 
 
     const fetchProperties = () => {
@@ -25,6 +27,11 @@ export const PropertyList = () => {
         }
     }
 
+    const handleAddProperty = (event) => {
+        event.preventDefault();
+        history.push('/Property/Create')
+    };
+
     useEffect(() => {
         fetchProperties();
     }, []);
@@ -32,6 +39,11 @@ export const PropertyList = () => {
     return (
         <>
             <h1>My Properties</h1>
+            <div>
+
+                <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
+
+            </div>
             <div className="container">
                 <div className="row justify-content-center">
                     {properties.map((property) => (

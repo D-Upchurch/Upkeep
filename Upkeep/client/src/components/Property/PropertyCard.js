@@ -10,6 +10,7 @@ export const Property = ({ property, handleDeleteProperty }) => {
     return (
         <Card>
             <CardBody>
+                <h2>{property.name}</h2>
                 <p>{property.address}</p>
                 <p>{cutDate}</p>
                 <Link to={`/Property/details/${property.id}`}>
