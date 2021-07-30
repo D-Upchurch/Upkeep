@@ -9,6 +9,8 @@ import { PropertyAddForm } from './Property/PropertyAddForm';
 import { EditProperty } from './Property/EditProperty';
 import { EquipmentList } from './Equipment/EquipmentList';
 import { EquipmentDetails } from './Equipment/EquipmentDetails';
+import { EquipmentAddForm } from './Equipment/EquipmentAddForm';
+import { EditEquipment } from './Equipment/EditEquipment';
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -46,13 +48,13 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <EquipmentDetails /> : <Redirect to="/login" />}
                 </Route>
 
-                {/* <Route path="/Equipment/Create" exact>
+                <Route path="/Equipment/Create" exact>
                     {isLoggedIn ? <EquipmentAddForm /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/Equipment/edit/:id">
                     {isLoggedIn ? <EditEquipment /> : <Redirect to="/login" />}
-                </Route> */}
+                </Route>
 
 
                 <Route path="/login" exact>
