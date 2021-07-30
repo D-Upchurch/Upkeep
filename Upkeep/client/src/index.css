@@ -15,6 +15,15 @@ code {
 main {
   margin: 2em;
 }
+
+#redText {
+  color: red;
+}
+
+#greenText {
+  color: green;
+}
+
 .app-spinner {
   position: fixed;
   top: 50%;

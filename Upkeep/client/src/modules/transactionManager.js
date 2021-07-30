@@ -19,9 +19,9 @@ export const getTransactionById = (id) => {
     })
 };
 
-export const getTransactionsByUserId = (userId) => {
+export const getTransactionsByFirebaseUserId = (firebaseUserId) => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${userId}`, {
+        return fetch(`${baseUrl}/${firebaseUserId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
