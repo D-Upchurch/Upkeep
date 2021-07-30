@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -11,6 +11,9 @@ import { EquipmentList } from './Equipment/EquipmentList';
 import { EquipmentDetails } from './Equipment/EquipmentDetails';
 import { EquipmentAddForm } from './Equipment/EquipmentAddForm';
 import { EditEquipment } from './Equipment/EditEquipment';
+import { TransactionList } from './Transaction/TransactionList';
+import { TransactionAddForm } from './Transaction/TransactionAddForm';
+import { EditTransaction } from './Transaction/EditTransaction';
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -22,7 +25,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <Home /> : <Redirect to="/login" />}
                 </Route>
 
-                //! Property paths
+                [//! Property paths]
                 <Route path="/Property" exact>
                     {isLoggedIn ? <PropertyList /> : <Redirect to="/login" />}
                 </Route>
@@ -39,7 +42,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <EditProperty /> : <Redirect to="/login" />}
                 </Route>
 
-                //! Equipment paths
+                [//! Equipment paths]
                 <Route path="/Equipment" exact>
                     {isLoggedIn ? <EquipmentList /> : <Redirect to="/login" />}
                 </Route>
@@ -56,7 +59,20 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <EditEquipment /> : <Redirect to="/login" />}
                 </Route>
 
+                [//! Transaction paths]
+                <Route path="/Transaction" exact>
+                    {isLoggedIn ? <TransactionList /> : <Redirect to="/login" />}
+                </Route>
 
+                <Route path="/Transaction/Create" exact>
+                    {isLoggedIn ? <TransactionAddForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/Transaction/edit/:id">
+                    {isLoggedIn ? <EditTransaction /> : <Redirect to="/login" />}
+                </Route>
+
+                [//! Authentication]
                 <Route path="/login" exact>
                     <Login />
                 </Route>

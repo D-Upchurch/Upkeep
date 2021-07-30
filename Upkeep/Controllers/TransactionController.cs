@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Upkeep.Models;
 using Upkeep.Repositories;
@@ -14,10 +15,12 @@ namespace Upkeep.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionRepository _transactionRepo;
+        private readonly IUserRepository _userRepository;
 
-        public TransactionController(ITransactionRepository transactionRepository)
+        public TransactionController(ITransactionRepository transactionRepository, IUserRepository userRepository)
         {
             _transactionRepo = transactionRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("details/{id}")]
@@ -31,10 +34,10 @@ namespace Upkeep.Controllers
             return Ok(transaction);
         }
 
-        [HttpGet("{userId}")]
-        public IActionResult GetTransactions(int userId)
+        [HttpGet("{firebaseUserId}")]
+        public IActionResult GetTransactions(string firebaseUserId)
         {
-            List<Transaction> transactions = _transactionRepo.GetTransactionsByUserId(userId);
+            List<Transaction> transactions = _transactionRepo.GetTransactionsByFirebaseUserId(firebaseUserId);
 
             return Ok(transactions);
         }
@@ -42,6 +45,9 @@ namespace Upkeep.Controllers
         [HttpPost]
         public IActionResult Post(Transaction transaction)
         {
+            var currentUserProfile = GetCurrentUserProfile();
+            transaction.UserId = currentUserProfile.Id;
+            transaction.User = currentUserProfile;
             _transactionRepo.Add(transaction);
             return CreatedAtAction("Get", new { id = transaction.Id }, transaction);
         }
@@ -75,6 +81,12 @@ namespace Upkeep.Controllers
         public IActionResult FilterSinceGivenDate(DateTime givenDate)
         {
             return Ok(_transactionRepo.FilterSinceGivenDate(givenDate));
+        }
+
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

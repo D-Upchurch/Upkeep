@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import { logout } from '../modules/authManager';
+import { useHistory } from 'react-router';
 
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
+    const history = useHistory();
     const toggle = () => setIsOpen(!isOpen);
 
 
@@ -27,11 +29,18 @@ export default function Header({ isLoggedIn }) {
 
                     </Nav>
 
-                    //! PUT NEW NAV ITEMS HERE
-
                     <Nav navbar>
                         {isLoggedIn &&
                             <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Property">Properties</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Equipment">Equipment</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Transaction">Transactions</NavLink>
+                                </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"
                                         style={{ cursor: "pointer" }} onClick={logout}>Logout</a>

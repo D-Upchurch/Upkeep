@@ -10,7 +10,7 @@ namespace Upkeep.Repositories
         void Delete(int id);
         List<Transaction> FilterSinceGivenDate(DateTime givenDate);
         Transaction GetTransactionById(int id);
-        List<Transaction> GetTransactionsByUserId(int userId);
+        List<Transaction> GetTransactionsByFirebaseUserId(string firebaseUserId);
         List<Transaction> Search(string criterion);
         void Update(Transaction transaction);
     }

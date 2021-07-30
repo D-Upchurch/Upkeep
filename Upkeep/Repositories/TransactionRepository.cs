@@ -12,7 +12,7 @@ namespace Upkeep.Repositories
     {
         public TransactionRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Transaction> GetTransactionsByUserId(int userId)
+        public List<Transaction> GetTransactionsByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -24,9 +24,9 @@ namespace Upkeep.Repositories
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
-                    WHERE t.userId = @userId
+                    WHERE u.firebaseUserId = @firebaseUserId
                     ";
-                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
                     var reader = cmd.ExecuteReader();
 
@@ -40,7 +40,7 @@ namespace Upkeep.Repositories
                             Description = DbUtils.GetString(reader, "description"),
                             Price = DbUtils.GetInt(reader, "price"),
                             Date = DbUtils.GetDateTime(reader, "date"),
-                            Type = DbUtils.GetBool(reader, "type"),
+                            Type = DbUtils.GetInt(reader, "type"),
                             UserId = DbUtils.GetInt(reader, "userId"),
                             User = new User()
                             {
@@ -87,7 +87,7 @@ namespace Upkeep.Repositories
                             Description = DbUtils.GetString(reader, "description"),
                             Price = DbUtils.GetInt(reader, "price"),
                             Date = DbUtils.GetDateTime(reader, "date"),
-                            Type = DbUtils.GetBool(reader, "type"),
+                            Type = DbUtils.GetInt(reader, "type"),
                             UserId = DbUtils.GetInt(reader, "userId"),
                             User = new User()
                             {
@@ -124,6 +124,7 @@ namespace Upkeep.Repositories
                     DbUtils.AddParameter(cmd, "@Date", transaction.Date);
                     DbUtils.AddParameter(cmd, "@Type", transaction.Type);
                     DbUtils.AddParameter(cmd, "@UserId", transaction.UserId);
+                    
 
                     transaction.Id = (int)cmd.ExecuteScalar();
                 }
@@ -202,7 +203,7 @@ namespace Upkeep.Repositories
                             Description = DbUtils.GetString(reader, "description"),
                             Price = DbUtils.GetInt(reader, "price"),
                             Date = DbUtils.GetDateTime(reader, "date"),
-                            Type = DbUtils.GetBool(reader, "type"),
+                            Type = DbUtils.GetInt(reader, "type"),
                             UserId = DbUtils.GetInt(reader, "userId"),
                             User = new User()
                             {
@@ -250,7 +251,7 @@ namespace Upkeep.Repositories
                             Description = DbUtils.GetString(reader, "description"),
                             Price = DbUtils.GetInt(reader, "price"),
                             Date = DbUtils.GetDateTime(reader, "date"),
-                            Type = DbUtils.GetBool(reader, "type"),
+                            Type = DbUtils.GetInt(reader, "type"),
                             UserId = DbUtils.GetInt(reader, "userId"),
                             User = new User()
                             {
