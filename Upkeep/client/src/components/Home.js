@@ -1,16 +1,46 @@
-import React from "react";
-import { getToken, tokenVariant } from "../modules/authManager";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Spinner } from "reactstrap";
+import { filterWeekly } from "../modules/transactionManager";
+import Transaction from "./Transaction/TransactionCard";
+import { useHistory } from "react-router";
 
-export default function Home() {
+export const Home = () => {
+    const [transactions, setTransactions] = useState([]);
+    const history = useHistory();
+
+    const fetchFilterWeekly = () => {
+        filterWeekly().then((res) => { setTransactions(res) })
+    };
+
+    const handleAllTransactions = (event) => {
+        event.preventDefault();
+        history.push("/Transaction")
+    }
+
+    useEffect(() => {
+        fetchFilterWeekly();
+    }, []);
 
     return (
-        <span style={{
-            position: "fixed",
-            left: 0,
-            right: 0,
-            top: "50%",
-            marginTop: "-0.5rem",
-            textAlign: "center",
-        }}>hello</span>
+        <>
+            <Container>
+                <Container>Properties</Container>
+                <Container>
+                    <span>Current Weekly Transactions</span>
+                    <div className="container">
+                        <div className="row justify-content-center">
+
+                            {transactions.map((transaction) => (
+                                <Transaction transaction={transaction} key={transaction.id} />
+                            ))}
+
+                            <Button className="btn btn-primary" onClick={handleAllTransactions}>All Transactions</Button>
+                        </div>
+                    </div>
+                </Container>
+            </Container>
+        </>
     );
 }
+
+export default Home;

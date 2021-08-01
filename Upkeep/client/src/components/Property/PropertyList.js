@@ -4,7 +4,7 @@ import Property from "./PropertyCard";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
-import { Input, Button } from "reactstrap";
+import { Input, Button, Spinner } from "reactstrap";
 
 // Display all of a User's properties
 
@@ -51,23 +51,42 @@ export const PropertyList = () => {
         fetchProperties();
     }, []);
 
-    return (
-        <>
-            <h1>My Properties</h1>
-            <div>
 
-                <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
-                <Input type="text" onChange={handleSearch}></Input>
-                <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+    if (properties.length < 1) {
+        return (
+            <>
+                <h1>My Properties</h1>
+                <div>
 
-            </div>
-            <div className="container">
-                <div className="row justify-content-center">
-                    {properties.map((property) => (
-                        <Property property={property} key={property.id} handleDeleteProperty={handleDeleteProperty} />
-                    ))}
+                    <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
+                    <Input type="text" onChange={handleSearch}></Input>
+                    <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+
                 </div>
-            </div>
-        </>
-    )
+                <Spinner className="app-spinner dark" />
+            </>
+        )
+    }
+    else {
+
+        return (
+            <>
+                <h1>My Properties</h1>
+                <div>
+
+                    <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
+                    <Input type="text" onChange={handleSearch}></Input>
+                    <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+
+                </div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        {properties.map((property) => (
+                            <Property property={property} key={property.id} handleDeleteProperty={handleDeleteProperty} />
+                        ))}
+                    </div>
+                </div>
+            </>
+        )
+    }
 };
