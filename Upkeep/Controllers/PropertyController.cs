@@ -74,7 +74,8 @@ namespace Upkeep.Controllers
         [HttpGet("search")]
         public IActionResult Search(string criterion)
         {
-            return Ok(_propertyRepo.Search(criterion));
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_propertyRepo.Search(criterion, currentUserProfile.FirebaseUserId));
         }
 
         private User GetCurrentUserProfile()

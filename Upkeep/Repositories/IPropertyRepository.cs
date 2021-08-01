@@ -10,6 +10,6 @@ namespace Upkeep.Repositories
         List<Property> GetPropertiesByFirebaseUserId(string firebaseUserId);
         Property GetPropertyById(int id);
         void Update(Property property);
-        List<Property> Search(string criterion);
+        List<Property> Search(string criterion, string firebaseUserId);
     }
 }

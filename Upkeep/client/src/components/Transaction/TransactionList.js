@@ -4,14 +4,27 @@ import Transaction from "./TransactionCard";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
+import { Button, Input } from "reactstrap";
 
 export const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
     const history = useHistory();
 
     const fetchTransactions = () => {
         return getTransactionsByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setTransactions(res))
     };
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        let selectedVal = event.target.value
+        console.log(selectedVal)
+        setSearchInput(selectedVal)
+    };
+
+    const fetchSearch = () => {
+        return searchTransactions(searchInput).then(res => setTransactions(res))
+    }
 
 
     const handleDeleteTransaction = (id) => {
@@ -36,6 +49,8 @@ export const TransactionList = () => {
             <h1>My Transactions</h1>
             <div>
                 <button className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</button>
+                <Input type="text" onChange={handleSearch}></Input>
+                <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
             </div>
             <div className="container">
                 <div className="row justify-content-center">

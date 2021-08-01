@@ -11,7 +11,7 @@ namespace Upkeep.Repositories
         List<Transaction> FilterSinceGivenDate(DateTime givenDate);
         Transaction GetTransactionById(int id);
         List<Transaction> GetTransactionsByFirebaseUserId(string firebaseUserId);
-        List<Transaction> Search(string criterion);
+        List<Transaction> Search(string criterion, string firebaseUserId);
         void Update(Transaction transaction);
     }
 }

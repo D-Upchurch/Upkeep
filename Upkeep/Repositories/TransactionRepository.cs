@@ -175,7 +175,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public List<Transaction> Search(string criterion)
+        public List<Transaction> Search(string criterion, string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -187,10 +187,11 @@ namespace Upkeep.Repositories
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
-                    WHERE (t.description LIKE @Criterion) OR (t.price LIKE @Criterion)
+                    WHERE ((t.description LIKE @Criterion) OR (t.price LIKE @Criterion)) AND (u.firebaseUserId = @firebaseUserId)
                     ";
 
                     DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var transactions = new List<Transaction>();
