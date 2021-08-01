@@ -184,7 +184,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public List<Property> Search(string criterion)
+        public List<Property> Search(string criterion, string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -196,10 +196,11 @@ namespace Upkeep.Repositories
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Property p
                     LEFT JOIN [User] u ON p.userId = u.[Id]
-                    WHERE (p.address LIKE @Criterion) OR (p.[name] LIKE @Criterion) 
+                    WHERE ((p.address LIKE @Criterion) OR (p.[name] LIKE @Criterion)) AND (u.firebaseUserId = @firebaseUserId) 
                     ";
 
                     DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var properties = new List<Property>();

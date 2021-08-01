@@ -72,7 +72,7 @@ export const EditTransaction = () => {
                 <FormGroup>
                     <Label for="type" sm={2}>Select Type</Label>
 
-                    <Input type="select" name="select" id="type" selected={transaction.type} onChange={handleControlledInputChange} required>
+                    <Input type="select" name="select" id="type" value={transaction.type} onChange={handleControlledInputChange} required>
 
                         <option value={0}>Expense</option>
                         <option value={1}>Payment</option>
