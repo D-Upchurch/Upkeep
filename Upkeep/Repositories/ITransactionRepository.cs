@@ -8,7 +8,8 @@ namespace Upkeep.Repositories
     {
         void Add(Transaction transaction);
         void Delete(int id);
-        List<Transaction> FilterSinceGivenDate(DateTime givenDate);
+        List<Transaction> FilterDateWeek(string firebaseUserId);
+        List<Transaction> FilterDateMonth(string firebaseUserId);
         Transaction GetTransactionById(int id);
         List<Transaction> GetTransactionsByFirebaseUserId(string firebaseUserId);
         List<Transaction> Search(string criterion, string firebaseUserId);

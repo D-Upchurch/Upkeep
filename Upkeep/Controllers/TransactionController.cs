@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using Upkeep.Repositories;
 
 namespace Upkeep.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
@@ -78,10 +80,18 @@ namespace Upkeep.Controllers
             return Ok(_transactionRepo.Search(criterion, currentUserProfile.FirebaseUserId));
         }
 
-        [HttpGet("filter")]
-        public IActionResult FilterSinceGivenDate(DateTime givenDate)
+        [HttpGet("filterWeek")]
+        public IActionResult FilterDate()
         {
-            return Ok(_transactionRepo.FilterSinceGivenDate(givenDate));
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_transactionRepo.FilterDateWeek(currentUserProfile.FirebaseUserId));
+        }
+
+        [HttpGet("filterMonth")]
+        public IActionResult FilterMonth()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_transactionRepo.FilterDateMonth(currentUserProfile.FirebaseUserId));
         }
 
         private User GetCurrentUserProfile()

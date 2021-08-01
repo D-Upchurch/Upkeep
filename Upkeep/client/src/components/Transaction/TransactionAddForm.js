@@ -24,7 +24,6 @@ export const TransactionAddForm = () => {
             selectedVal = parseInt(selectedVal)
         }
 
-        console.log(selectedVal)
         newTransaction[event.target.id] = selectedVal
         setTransaction(newTransaction);
     };
@@ -33,7 +32,6 @@ export const TransactionAddForm = () => {
         event.preventDefault();
         setIsLoading(true);
         let newTransaction = { ...transaction };
-        console.log(newTransaction)
         addTransaction(newTransaction).then(() => history.push('/Transaction'))
     };
 

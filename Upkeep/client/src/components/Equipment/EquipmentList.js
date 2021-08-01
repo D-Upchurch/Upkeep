@@ -4,6 +4,7 @@ import Equipment from './EquipmentCard';
 import firebase from 'firebase/app';
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
+import { Spinner } from 'reactstrap';
 
 export const EquipmentList = () => {
     const [userEquipment, setUserEquipment] = useState([]);
@@ -30,19 +31,33 @@ export const EquipmentList = () => {
         fetchEquipment();
     }, []);
 
-    return (
-        <>
-            <h1>My Equipment</h1>
-            <div>
-                <button className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</button>
-            </div>
-            <div className="container">
-                <div className="row justify-content-center">
-                    {userEquipment.map((equipment) => (
-                        <Equipment equipment={equipment} key={equipment.id} handleDeleteEquipment={handleDeleteEquipment} />
-                    ))}
+    if (userEquipment.length < 1) {
+        return (
+            <>
+                <h1>My Equipment</h1>
+                <div>
+                    <button className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</button>
                 </div>
-            </div>
-        </>
-    )
+                <Spinner className="app-spinner dark" />
+            </>
+        )
+    }
+    else {
+
+        return (
+            <>
+                <h1>My Equipment</h1>
+                <div>
+                    <button className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</button>
+                </div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        {userEquipment.map((equipment) => (
+                            <Equipment equipment={equipment} key={equipment.id} handleDeleteEquipment={handleDeleteEquipment} />
+                        ))}
+                    </div>
+                </div>
+            </>
+        )
+    }
 };

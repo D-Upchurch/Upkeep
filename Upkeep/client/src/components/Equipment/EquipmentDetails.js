@@ -25,31 +25,58 @@ export const EquipmentDetails = () => {
         fetchEquipment();
     }, []);
 
+    if (equipment.hours === null) {
+        return (
+            <>
+                <Card>
+                    <img src={equipment.image} alt={`"a ${equipment.type}"`} />
+                    <CardBody>
+                        <h3>{equipment.type}</h3>
+                        <h3>{equipment.make}</h3>
+                        <h3>{equipment.model}</h3>
+                        <p>Notes: {equipment.notes}</p>
+                    </CardBody>
+                    <div>
+                        <Link to={`/Equipment/edit/${equipment.id}`}>
+                            <button className="btn btn-primary">Edit</button>
+                        </Link>
 
+                        <button type="button" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</button>
 
-    return (
-        <>
-            <Card>
-                <img src={equipment.image} alt={`"a ${equipment.type}"`} />
-                <CardBody>
-                    <h3>{equipment.type}</h3>
-                    <h3>{equipment.make}</h3>
-                    <h3>{equipment.model}</h3>
-                    <p>Hours: {equipment.hours}</p>
-                    <p>Notes: {equipment.notes}</p>
-                </CardBody>
-                <div>
-                    <Link to={`/Equipment/edit/${equipment.id}`}>
-                        <button className="btn btn-primary">Edit</button>
-                    </Link>
+                        <Link to={`/Equipment`}>
+                            <button className="btn btn-primary">Back to Equipment</button>
+                        </Link>
+                    </div>
+                </Card>
+            </>
+        )
+    }
+    else {
 
-                    <button type="button" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</button>
+        return (
+            <>
+                <Card>
+                    <img src={equipment.image} alt={`"a ${equipment.type}"`} />
+                    <CardBody>
+                        <h3>{equipment.type}</h3>
+                        <h3>{equipment.make}</h3>
+                        <h3>{equipment.model}</h3>
+                        <p>Hours: {equipment.hours}</p>
+                        <p>Notes: {equipment.notes}</p>
+                    </CardBody>
+                    <div>
+                        <Link to={`/Equipment/edit/${equipment.id}`}>
+                            <button className="btn btn-primary">Edit</button>
+                        </Link>
 
-                    <Link to={`/Equipment`}>
-                        <button className="btn btn-primary">Back to Equipment</button>
-                    </Link>
-                </div>
-            </Card>
-        </>
-    )
+                        <button type="button" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</button>
+
+                        <Link to={`/Equipment`}>
+                            <button className="btn btn-primary">Back to Equipment</button>
+                        </Link>
+                    </div>
+                </Card>
+            </>
+        )
+    }
 }

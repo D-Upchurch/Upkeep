@@ -91,9 +91,26 @@ export const searchTransactions = (input) => {
     })
 };
 
-export const filterWeekly = (givenDate) => {
+export const filterWeekly = () => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/filter?givenDate=${givenDate}`, {
+        return fetch(`${baseUrl}/filterWeek`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Something went wrong :(")
+            }
+        })
+    })
+};
+
+export const filterMonthly = () => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/filterMonth`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

@@ -25,6 +25,7 @@ namespace Upkeep.Repositories
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
                     WHERE u.firebaseUserId = @firebaseUserId
+                    ORDER BY t.date ASC
                     ";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
@@ -73,6 +74,7 @@ namespace Upkeep.Repositories
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
                     WHERE t.id = @id
+                  
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -188,6 +190,7 @@ namespace Upkeep.Repositories
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
                     WHERE ((t.description LIKE @Criterion) OR (t.price LIKE @Criterion)) AND (u.firebaseUserId = @firebaseUserId)
+                    ORDER BY t.date ASC
                     ";
 
                     DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
@@ -224,7 +227,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public List<Transaction> FilterSinceGivenDate(DateTime givenDate)
+        public List<Transaction> FilterDateWeek(string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -234,12 +237,62 @@ namespace Upkeep.Repositories
                     cmd.CommandText = @"
                     SELECT t.id, t.userId, t.description, t.price, t.date, t.type,
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
-                    FROM Transaction t
+                    FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
-                    WHERE t.Date >= @givenDate
+                    WHERE (t.date >= DATEADD(d,-7,GETDATE())) AND (u.firebaseUserId = @firebaseUserId)
+                    ORDER BY t.date ASC
+                    "; 
+
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var transactions = new List<Transaction>();
+                    while (reader.Read())
+                    {
+                        transactions.Add(new Transaction()
+                        {
+                            Id = DbUtils.GetInt(reader, "id"),
+                            Description = DbUtils.GetString(reader, "description"),
+                            Price = DbUtils.GetInt(reader, "price"),
+                            Date = DbUtils.GetDateTime(reader, "date"),
+                            Type = DbUtils.GetInt(reader, "type"),
+                            UserId = DbUtils.GetInt(reader, "userId"),
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return transactions;
+                }
+            }
+        }
+
+        public List<Transaction> FilterDateMonth(string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT t.id, t.userId, t.description, t.price, t.date, t.type,
+                           u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
+                    FROM [Transaction] t
+                    LEFT JOIN [User] u ON t.userId = u.Id
+                    WHERE (t.date >= DATEADD(m,-1,GETDATE())) AND (u.firebaseUserId = @firebaseUserId)
+                    ORDER BY t.date ASC
                     ";
 
-                    DbUtils.AddParameter(cmd, "@givenDate", givenDate);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
                     var reader = cmd.ExecuteReader();
 
