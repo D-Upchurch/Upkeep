@@ -18,7 +18,7 @@ export const EquipmentList = () => {
         let yes = window.confirm("Are you sure you want to delete this equipment?")
         if (yes === true) {
             deleteEquipment(id)
-                .then(history.push("/Equipment"))
+            return fetchEquipment();
         }
     }
 

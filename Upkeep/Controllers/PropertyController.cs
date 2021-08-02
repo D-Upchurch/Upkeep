@@ -34,7 +34,7 @@ namespace Upkeep.Controllers
             {
                 return NotFound();
             }
-            else if (property.User != currentUserProfile)
+            else if (property.UserId != currentUserProfile.Id)
             {
                 return Unauthorized();
             }

@@ -34,7 +34,7 @@ namespace Upkeep.Controllers
             {
                 return NotFound();
             }
-            else if (equipment.User != currentUserProfile)
+            else if (equipment.User.FirebaseUserId != currentUserProfile.FirebaseUserId)
             {
                 return Unauthorized();
             }

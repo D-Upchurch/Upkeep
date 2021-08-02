@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router-dom';
+
 import { getToken } from './authManager'
 
 const baseUrl = '/api/Property';
@@ -14,10 +14,10 @@ export const getPropertyById = (id) => {
             console.log(res)
             if (res.ok) {
                 return res.json();
+            } else if (res.statusText === "Unauthorized") {
+                return alert("Sorry, you are unauthorized to view this property.")
             }
-            else if (res.statusText === "Unauthorized") {
-                return alert("Sorry, you are unauthorized to view this property.");
-            } else {
+            else {
                 throw new Error("Something went wrong :(")
             }
         })

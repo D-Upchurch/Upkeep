@@ -33,7 +33,7 @@ export const TransactionList = () => {
         let yes = window.confirm("Are you sure you want to delete this transaction?")
         if (yes === true) {
             deleteTransaction(id)
-                .then(fetchTransactions())
+            return fetchTransactions();
         }
     };
 
