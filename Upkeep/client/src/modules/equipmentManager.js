@@ -19,9 +19,9 @@ export const getEquipmentById = (id) => {
     })
 };
 
-export const getEquipmentByFirebaseUserId = (firebaseUserId) => {
+export const getEquipmentByFirebaseUserId = () => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${firebaseUserId}`, {
+        return fetch(`${baseUrl}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

@@ -62,7 +62,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public Equipment GetEquipmentById(int id)
+        public Equipment GetEquipmentById(int id, string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -74,9 +74,10 @@ namespace Upkeep.Repositories
                                    u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM Equipment e
                     LEFT JOIN [User] u ON e.UserId = u.Id
-                    WHERE e.Id = @Id
+                    WHERE (e.Id = @Id) AND (u.firebaseUserId = @firebaseUserId)
                     ";
                     DbUtils.AddParameter(cmd, "@Id", id);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var equipment = new Equipment();

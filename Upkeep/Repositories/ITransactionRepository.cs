@@ -10,7 +10,7 @@ namespace Upkeep.Repositories
         void Delete(int id);
         List<Transaction> FilterDateWeek(string firebaseUserId);
         List<Transaction> FilterDateMonth(string firebaseUserId);
-        Transaction GetTransactionById(int id);
+        Transaction GetTransactionById(int id, string firebaseUserId);
         List<Transaction> GetTransactionsByFirebaseUserId(string firebaseUserId);
         List<Transaction> Search(string criterion, string firebaseUserId);
         void Update(Transaction transaction);

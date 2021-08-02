@@ -16,7 +16,7 @@ export const PropertyList = () => {
 
 
     const fetchProperties = () => {
-        return getPropertiesByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setProperties(res))
+        return getPropertiesByFirebaseUserId().then(res => setProperties(res))
     }
 
 

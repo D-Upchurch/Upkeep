@@ -62,7 +62,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public Property GetPropertyById(int id)
+        public Property GetPropertyById(int id, string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -74,9 +74,10 @@ namespace Upkeep.Repositories
                            u.[Id] AS [UsersId], u.[Name] as [UserName], u.[email], u.[phone], u.firebaseUserId
                     FROM Property p
                     LEFT JOIN [User] u ON p.userId = u.[Id]
-                    WHERE p.Id = @id
+                    WHERE (p.Id = @id) AND (u.firebaseUserId = @firebaseUserId)
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var property = new Property();

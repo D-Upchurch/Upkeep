@@ -11,7 +11,7 @@ export const EquipmentList = () => {
     const history = useHistory();
 
     const fetchEquipment = () => {
-        return getEquipmentByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setUserEquipment(res))
+        return getEquipmentByFirebaseUserId().then(res => setUserEquipment(res))
     };
 
     const handleDeleteEquipment = (id) => {

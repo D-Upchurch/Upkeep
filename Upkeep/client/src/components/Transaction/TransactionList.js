@@ -13,7 +13,7 @@ export const TransactionList = () => {
     const history = useHistory();
 
     const fetchTransactions = () => {
-        return getTransactionsByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setTransactions(res))
+        return getTransactionsByFirebaseUserId().then(res => setTransactions(res))
     };
 
 
