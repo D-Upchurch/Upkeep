@@ -61,7 +61,7 @@ namespace Upkeep.Repositories
             }
         }
 
-        public Transaction GetTransactionById(int id)
+        public Transaction GetTransactionById(int id, string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -73,10 +73,11 @@ namespace Upkeep.Repositories
                            u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
                     FROM [Transaction] t
                     LEFT JOIN [User] u ON t.userId = u.Id
-                    WHERE t.id = @id
+                    WHERE (t.id = @id) AND (u.firebaseUserId = @firebaseUserId)
                   
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var transaction = new Transaction();

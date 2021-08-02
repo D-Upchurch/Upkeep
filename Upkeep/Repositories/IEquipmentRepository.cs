@@ -7,7 +7,7 @@ namespace Upkeep.Repositories
     {
         void Add(Equipment equipment);
         void Delete(int id);
-        Equipment GetEquipmentById(int id);
+        Equipment GetEquipmentById(int id, string firebaseUserId);
         List<Equipment> GetEquipmentByFirebaseUserId(string firebaseUserId);
         void Update(Equipment equipment);
     }

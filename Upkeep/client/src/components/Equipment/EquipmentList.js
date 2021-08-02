@@ -11,14 +11,14 @@ export const EquipmentList = () => {
     const history = useHistory();
 
     const fetchEquipment = () => {
-        return getEquipmentByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setUserEquipment(res))
+        return getEquipmentByFirebaseUserId().then(res => setUserEquipment(res))
     };
 
     const handleDeleteEquipment = (id) => {
         let yes = window.confirm("Are you sure you want to delete this equipment?")
         if (yes === true) {
             deleteEquipment(id)
-                .then(history.push("/Equipment"))
+            return fetchEquipment();
         }
     }
 

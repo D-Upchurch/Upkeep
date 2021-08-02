@@ -1,3 +1,4 @@
+
 import { getToken } from './authManager'
 
 const baseUrl = '/api/Property';
@@ -10,18 +11,22 @@ export const getPropertyById = (id) => {
                 Authorization: `Bearer ${token}`
             }
         }).then(res => {
+            console.log(res)
             if (res.ok) {
                 return res.json();
-            } else {
+            } else if (res.statusText === "Unauthorized") {
+                return alert("Sorry, you are unauthorized to view this property.")
+            }
+            else {
                 throw new Error("Something went wrong :(")
             }
         })
     })
 };
 
-export const getPropertiesByFirebaseUserId = (firebaseUserId) => {
+export const getPropertiesByFirebaseUserId = () => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${firebaseUserId}`, {
+        return fetch(`${baseUrl}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

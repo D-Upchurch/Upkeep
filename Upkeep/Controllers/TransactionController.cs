@@ -28,18 +28,27 @@ namespace Upkeep.Controllers
         [HttpGet("details/{id}")]
         public IActionResult Get(int id)
         {
-            var transaction = _transactionRepo.GetTransactionById(id);
+            var currentUserProfile = GetCurrentUserProfile();
+            var transaction = _transactionRepo.GetTransactionById(id, currentUserProfile.FirebaseUserId);
             if (transaction == null)
             {
                 return NotFound();
             }
-            return Ok(transaction);
+            else if (transaction.User.FirebaseUserId != currentUserProfile.FirebaseUserId)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                return Ok(transaction);
+            }
         }
 
-        [HttpGet("{firebaseUserId}")]
-        public IActionResult GetTransactions(string firebaseUserId)
+        [HttpGet]
+        public IActionResult GetTransactions()
         {
-            List<Transaction> transactions = _transactionRepo.GetTransactionsByFirebaseUserId(firebaseUserId);
+            var currentUserProfile = GetCurrentUserProfile();
+            List<Transaction> transactions = _transactionRepo.GetTransactionsByFirebaseUserId(currentUserProfile.FirebaseUserId);
 
             return Ok(transactions);
         }

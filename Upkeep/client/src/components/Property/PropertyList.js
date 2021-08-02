@@ -16,7 +16,7 @@ export const PropertyList = () => {
 
 
     const fetchProperties = () => {
-        return getPropertiesByFirebaseUserId(firebase.auth().currentUser.uid).then(res => setProperties(res))
+        return getPropertiesByFirebaseUserId().then(res => setProperties(res))
     }
 
 
@@ -37,7 +37,7 @@ export const PropertyList = () => {
         let yes = window.confirm("Are you sure you want to delete this property?")
         if (yes === true) {
             deleteProperty(id)
-                .then(fetchProperties())
+            return fetchProperties();
         }
     };
 

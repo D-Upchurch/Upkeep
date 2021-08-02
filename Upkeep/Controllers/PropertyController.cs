@@ -28,18 +28,27 @@ namespace Upkeep.Controllers
         [HttpGet("details/{id}")]
         public IActionResult Get(int id)
         {
-            var property = _propertyRepo.GetPropertyById(id);
+            var currentUserProfile = GetCurrentUserProfile();
+            var property = _propertyRepo.GetPropertyById(id, currentUserProfile.FirebaseUserId);
             if (property == null)
             {
                 return NotFound();
             }
-            return Ok(property);
+            else if (property.UserId != currentUserProfile.Id)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                return Ok(property);
+            }
         }
 
-        [HttpGet("{firebaseUserId}")]
-        public IActionResult GetProperties(string firebaseUserId)
+        [HttpGet]
+        public IActionResult GetProperties()
         {
-            List<Property> properties = _propertyRepo.GetPropertiesByFirebaseUserId(firebaseUserId);
+            var currentUserProfile = GetCurrentUserProfile();
+            List<Property> properties = _propertyRepo.GetPropertiesByFirebaseUserId(currentUserProfile.FirebaseUserId);
 
             return Ok(properties);
         }

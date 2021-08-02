@@ -28,18 +28,28 @@ namespace Upkeep.Controllers
         [HttpGet("details/{id}")]
         public IActionResult Get(int id)
         {
-            var equipment = _equipmentRepo.GetEquipmentById(id);
+            var currentUserProfile = GetCurrentUserProfile();
+            var equipment = _equipmentRepo.GetEquipmentById(id, currentUserProfile.FirebaseUserId);
             if (equipment == null)
             {
                 return NotFound();
             }
-            return Ok(equipment);
+            else if (equipment.User.FirebaseUserId != currentUserProfile.FirebaseUserId)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                return Ok(equipment);
+            }
+            
         }
 
-        [HttpGet("{firebaseUserId}")]
-        public IActionResult GetEquipment(string firebaseUserId)
+        [HttpGet]
+        public IActionResult GetEquipment()
         {
-            List<Equipment> equipmentList = _equipmentRepo.GetEquipmentByFirebaseUserId(firebaseUserId);
+            var currentUserProfile = GetCurrentUserProfile();
+            List<Equipment> equipmentList = _equipmentRepo.GetEquipmentByFirebaseUserId(currentUserProfile.FirebaseUserId);
 
             return Ok(equipmentList);
         }

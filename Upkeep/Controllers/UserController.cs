@@ -22,12 +22,14 @@ namespace Upkeep.Controllers
             _userRepository = userRepository;
         }
 
+        
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetUser(string firebaseUserId)
         {
             return Ok(_userRepository.GetByFirebaseUserId(firebaseUserId));
         }
 
+      
         [HttpGet("userId/{id}")]
         public IActionResult Get(int id)
         {
@@ -39,6 +41,7 @@ namespace Upkeep.Controllers
             return Ok(user);
         }
 
+        
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
         {
@@ -50,6 +53,7 @@ namespace Upkeep.Controllers
             return Ok();
         }
 
+        
         [HttpPost]
         public IActionResult Post(User user)
         {
