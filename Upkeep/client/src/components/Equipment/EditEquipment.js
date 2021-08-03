@@ -7,14 +7,36 @@ import { useHistory } from "react-router";
 export const EditEquipment = () => {
     const [equipment, setEquipment] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [image, setImage] = useState(`'${equipment.image}'`);
     const { id } = useParams();
     const history = useHistory();
 
     const fetchEquipment = () => {
         return getEquipmentById(id).then(equipment => {
+            setImage(equipment.image)
             setEquipment(equipment)
         });
     };
+
+    const uploadImage = async e => {
+        const files = e.target.files
+        const data = new FormData()
+        data.append('file', files[0])
+        data.append('upload_preset', 'upkeep')
+        setIsLoading(true)
+        const res = await fetch(
+            'https://api.cloudinary.com/v1_1/dcu-upkeep/image/upload',
+            {
+                method: 'POST',
+                body: data
+            }
+        )
+        const file = await res.json()
+
+        console.log(file.secure_url)
+        setImage(file.secure_url)
+        setIsLoading(false)
+    }
 
     const handleControlledInputChange = (event) => {
         let editedEquipment = { ...equipment };
@@ -32,6 +54,7 @@ export const EditEquipment = () => {
         event.preventDefault();
         setIsLoading(true);
         let editedEquipment = { ...equipment };
+        editedEquipment.image = image;
         editEquipment(editedEquipment).then(() => history.push('/Equipment'))
     };
 
@@ -65,12 +88,17 @@ export const EditEquipment = () => {
                     <Input type="number" id="hours" placeholder="hours" value={equipment.hours} onChange={handleControlledInputChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="imageUrl">Image Url</Label>
-                    <Input type="text" id="image" placeholder="Image URL" value={equipment.image} onChange={handleControlledInputChange} />
-                </FormGroup>
-                <FormGroup>
                     <Label for="notes">Notes</Label>
                     <Input type="textarea" id="notes" placeholder="Notes" value={equipment.notes} onChange={handleControlledInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="imageUrl">Image Url</Label>
+                    <Input type="file" name="file" id="image" placeholder="Upload an image" onChange={uploadImage} />
+                    <div>{isLoading ? (
+                        <h3>Loading</h3>
+                    ) : (
+                        <img src={image} style={{ width: '300px' }} />
+                    )}</div>
                 </FormGroup>
                 <Button className="btn btn-primary" onClick={handleClickSaveEquipment}>Save Equipment</Button>
                 <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
