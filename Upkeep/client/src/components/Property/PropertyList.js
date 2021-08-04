@@ -55,12 +55,12 @@ export const PropertyList = () => {
     if (properties.length < 1) {
         return (
             <>
-                <h1>My Properties</h1>
+                <h2 className="List-header">My Properties</h2>
                 <div>
 
-                    <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
-                    <Input type="text" onChange={handleSearch}></Input>
-                    <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddProperty}>Add Property</Button>
+                    <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
+                    <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
 
                 </div>
                 <Spinner className="app-spinner dark" />
@@ -71,12 +71,12 @@ export const PropertyList = () => {
 
         return (
             <>
-                <h1>My Properties</h1>
-                <div>
+                <h2 className="List-header">My Properties</h2>
+                <div className="List-top-row">
 
-                    <button className="btn btn-primary" onClick={handleAddProperty}>Add Property</button>
-                    <Input type="text" onChange={handleSearch}></Input>
-                    <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddProperty}>Add Property</Button>
+                    <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
+                    <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
 
                 </div>
                 <div className="container">

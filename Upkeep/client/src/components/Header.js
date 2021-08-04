@@ -13,8 +13,8 @@ export default function Header({ isLoggedIn }) {
 
     return (
         <div>
-            <Navbar color="light" light expand="md">
-                <NavbarBrand tag={RRNavLink} to="/">Upkeep</NavbarBrand>
+            <Navbar className="navColor" light expand="md">
+                <NavbarBrand className="navPadding" tag={RRNavLink} to="/">Upkeep</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>

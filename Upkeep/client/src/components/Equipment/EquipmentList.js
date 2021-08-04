@@ -4,7 +4,7 @@ import Equipment from './EquipmentCard';
 import firebase from 'firebase/app';
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
-import { Spinner } from 'reactstrap';
+import { Spinner, Button } from 'reactstrap';
 
 export const EquipmentList = () => {
     const [userEquipment, setUserEquipment] = useState([]);
@@ -34,10 +34,11 @@ export const EquipmentList = () => {
     if (userEquipment.length < 1) {
         return (
             <>
-                <h1>My Equipment</h1>
-                <div>
-                    <button className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</button>
+                <h2 className="List-header">My Equipment</h2>
+                <div className="List-header">
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</Button>
                 </div>
+                <br />
                 <Spinner className="app-spinner dark" />
             </>
         )
@@ -46,10 +47,11 @@ export const EquipmentList = () => {
 
         return (
             <>
-                <h1>My Equipment</h1>
-                <div>
-                    <button className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</button>
+                <h2 className="List-header">My Equipment</h2>
+                <div className="List-header">
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddEquipment}>Add Equipment</Button>
                 </div>
+                <br />
                 <div className="container">
                     <div className="row justify-content-center">
                         {userEquipment.map((equipment) => (

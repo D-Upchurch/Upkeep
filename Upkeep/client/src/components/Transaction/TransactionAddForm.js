@@ -43,6 +43,7 @@ export const TransactionAddForm = () => {
     return (
         <>
             <Form>
+                <h2 className="List-header">Add Transaction</h2>
                 <FormGroup>
                     <Label for="type" sm={2}>Select Type</Label>
 
@@ -65,8 +66,8 @@ export const TransactionAddForm = () => {
                     <Label for="date">Date</Label>
                     <Input type="date" id="date" value={transaction.date} onChange={handleControlledInputChange} />
                 </FormGroup>
-                <Button className="btn btn-primary" onClick={handleClickSaveTransaction}>Save Transaction</Button>
-                <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickSaveTransaction}>Save Transaction</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
             </Form>
         </>
     )

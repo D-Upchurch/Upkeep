@@ -58,6 +58,7 @@ export const PropertyAddForm = () => {
     return (
         <>
             <Form>
+                <h2 className="List-header">Add Property</h2>
                 <FormGroup>
                     <Label for="name">Name</Label>
                     <Input type="text" id="name" placeholder="Client Name" value={property.name} onChange={handleControlledInputChange} />
@@ -87,8 +88,8 @@ export const PropertyAddForm = () => {
                         <img src={image} style={{ width: '300px' }} />
                     )}</div>
                 </FormGroup>
-                <Button className="btn btn-primary" onClick={handleClickSaveProperty}>Save Property</Button>
-                <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickSaveProperty}>Save Property</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
             </Form>
         </>
     )
