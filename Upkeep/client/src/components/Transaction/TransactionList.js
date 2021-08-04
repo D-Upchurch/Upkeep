@@ -52,6 +52,19 @@ export const TransactionList = () => {
         history.push('/Transaction/Create')
     };
 
+    // const handleGains = () => {
+    //     let gainPrice = 0
+    //     for (const transaction in transactions) {
+    //         let singleGain = 0
+    //         if (transaction.type === 1) {
+    //             let singleGain = ${ transaction.price }
+    //         }
+    //         ${ gainPrice } += ${ singleGain }
+    //     }
+    //     console.log(gainPrice)
+    //     return gainPrice
+    // }
+
     useEffect(() => {
         fetchTransactions();
     }, []);
@@ -59,10 +72,10 @@ export const TransactionList = () => {
     if (transactions.length < 1) {
         return (
             <>
-                <h1>My Transactions</h1>
+                <h2 className="List-header">My Transactions</h2>
                 <div>
-                    <button className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</button>
-                    <Input type="text" onChange={handleSearch}></Input>
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</Button>
+                    <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
                     <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
                 </div>
                 <Spinner className="app-spinner dark" />
@@ -73,13 +86,22 @@ export const TransactionList = () => {
 
         return (
             <>
-                <h1>My Transactions</h1>
+                <h2 className="List-header">My Transactions</h2>
+                <div className="List-top-row">
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</Button>
+                    <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
+                    <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+                </div>
+                <div className="transaction-filter-buttons">
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleFilterWeekly}>Last 7 Days</Button>
+                    <Button id="greenButton" className="btn btn-primary" onClick={handleFilterMonthly}>Last Month</Button>
+                    <Button id="greenButton" className="btn btn-primary" onClick={fetchTransactions}>Reset</Button>
+                </div>
+                <br />
                 <div>
-                    <button className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</button>
-                    <Input type="text" onChange={handleSearch}></Input>
-                    <Button className="btn btn-primary" onClick={fetchSearch}>Search</Button>
-                    <Button className="btn btn-primary" onClick={handleFilterWeekly}>Last 7 Days</Button>
-                    <Button className="btn btn-primary" onClick={handleFilterMonthly}>Last Month</Button>
+                    <h4>Gains: </h4>
+                    <h4>Losses: </h4>
+                    <h4>Net Total: </h4>
                 </div>
                 <div className="container">
                     <div className="row justify-content-center">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getPropertyById, deleteProperty } from '../../modules/propertyManager';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, Button } from 'reactstrap';
 import { useParams, Link } from 'react-router-dom';
 import { dateFixer } from '../../modules/helper';
 import { useHistory } from 'react-router';
@@ -32,24 +32,18 @@ export const PropertyDetails = () => {
     return (
         <>
             <Card>
-                <img src={property.image} alt={"A fresh cut lawn"} />
+                <img src={property.image} style={{ width: '300px' }} alt={"A fresh cut lawn"} />
                 <CardBody>
                     <h2>Name: {property.name}</h2>
                     <h2>Address: {property.address}</h2>
                     <p>Service Charge: ${property.serviceCharge}</p>
-                    <p>Last Day Serviced: {cutDate}</p>
+                    <p>Last Date Serviced: {cutDate}</p>
                     <p>Notes: {property.notes}</p>
                 </CardBody>
-                <div>
-                    <Link to={`/Property/edit/${property.id}`}>
-                        <button className="btn btn-primary">Edit</button>
-                    </Link>
-                    <br />
-                    <button type="button" className="btn btn-primary" onClick={() => handleDeleteProperty(property.id)}>Delete</button>
-                    <br />
-                    <Link to={`/Property`}>
-                        <button className="btn btn-primary">Back to Properties</button>
-                    </Link>
+                <div className="buttons-row">
+                    <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push(`/Property/edit/${property.id}`)}>Edit</Button>
+                    <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => handleDeleteProperty(property.id)}>Delete</Button>
+                    <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push(`/Property`)}>All Properties</Button>
                 </div>
             </Card>
         </>

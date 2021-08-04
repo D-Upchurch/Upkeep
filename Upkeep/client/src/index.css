@@ -24,6 +24,49 @@ main {
   color: green;
 }
 
+.navPadding {
+  padding-left: 0.8em;
+}
+
+.navColor {
+  background-color: #11a800;
+}
+
+#greenButton {
+  background-color: #11a800;
+  border-color: white;
+  width: 9em;
+}
+
+
+.List-top-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+.flex-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.transaction-filter-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+.List-header {
+  text-align: center;
+}
+
+.reduce-search-width {
+  max-width: 75%;
+}
+
 .app-spinner {
   position: fixed;
   top: 50%;

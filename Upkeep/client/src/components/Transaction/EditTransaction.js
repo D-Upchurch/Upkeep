@@ -68,7 +68,7 @@ export const EditTransaction = () => {
     return (
         <>
             <Form>
-                <h1>Edit Transaction</h1>
+                <h2>Edit Transaction</h2>
                 <FormGroup>
                     <Label for="type" sm={2}>Select Type</Label>
 
@@ -91,8 +91,8 @@ export const EditTransaction = () => {
                     <Label for="date">Date</Label>
                     <Input type="date" id="date" defaultValue={momentTransDateFixer(transaction)} value={transaction.date} format="YYYY-MM-DD" onChange={handleDate} />
                 </FormGroup>
-                <Button className="btn btn-primary" onClick={handleClickSaveTransaction}>Save Transaction</Button>
-                <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickSaveTransaction}>Save Transaction</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
             </Form>
         </>
     )

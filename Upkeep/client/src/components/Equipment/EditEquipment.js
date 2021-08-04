@@ -92,7 +92,7 @@ export const EditEquipment = () => {
                     <Input type="textarea" id="notes" placeholder="Notes" value={equipment.notes} onChange={handleControlledInputChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="imageUrl">Image Url</Label>
+                    <Label for="imageUrl">Image Url: </Label>
                     <Input type="file" name="file" id="image" placeholder="Upload an image" onChange={uploadImage} />
                     <div>{isLoading ? (
                         <h3>Loading</h3>
@@ -100,8 +100,8 @@ export const EditEquipment = () => {
                         <img src={image} style={{ width: '300px' }} />
                     )}</div>
                 </FormGroup>
-                <Button className="btn btn-primary" onClick={handleClickSaveEquipment}>Save Equipment</Button>
-                <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickSaveEquipment}>Save Equipment</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
             </Form>
         </>
     )

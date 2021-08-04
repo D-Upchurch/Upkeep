@@ -4,6 +4,7 @@ import { Form, FormGroup, Button, Input, Label } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router";
 import { momentDateFixer } from "../../modules/helper";
+import { logout } from "../../modules/authManager";
 
 
 
@@ -85,7 +86,7 @@ export const EditProperty = () => {
     return (
         <>
             <Form>
-                <h1>Edit Property</h1>
+                <h2>Edit Property</h2>
                 <FormGroup>
                     <Label for="name">Name</Label>
                     <Input type="text" id="name" placeholder="Client Name" defaultValue={property.name} onChange={handleControlledInputChange} />
@@ -121,3 +122,4 @@ export const EditProperty = () => {
         </>
     )
 };
+

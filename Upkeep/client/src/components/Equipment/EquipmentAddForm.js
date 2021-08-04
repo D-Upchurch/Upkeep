@@ -57,6 +57,7 @@ export const EquipmentAddForm = () => {
     return (
         <>
             <Form>
+                <h2 className="List-header">Add Equipment</h2>
                 <FormGroup>
                     <Label for="type">Type</Label>
                     <Input type="text" id="type" placeholder="Equipment type" value={equipment.type} onChange={handleControlledInputChange} />
@@ -86,8 +87,8 @@ export const EquipmentAddForm = () => {
                         <img src={image} style={{ width: '300px' }} />
                     )}</div>
                 </FormGroup>
-                <Button className="btn btn-primary" onClick={handleClickSaveEquipment}>Save Equipment</Button>
-                <Button className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickSaveEquipment}>Save Equipment</Button>
+                <Button id="greenButton" className="btn btn-primary" onClick={handleClickCancel}>Cancel</Button>
             </Form>
         </>
     )

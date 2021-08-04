@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getEquipmentById, deleteEquipment } from '../../modules/equipmentManager';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, Button } from 'reactstrap';
 import { useParams, useHistory } from 'react-router';
 import { Link } from 'react-router-dom'
 
@@ -29,23 +29,19 @@ export const EquipmentDetails = () => {
         return (
             <>
                 <Card>
-                    <img src={equipment.image} alt={`"a ${equipment.type}"`} />
+                    <img src={equipment.image} style={{ width: '300px' }} alt={`"a ${equipment.type}"`} />
                     <CardBody>
                         <h3>{equipment.type}</h3>
                         <h3>{equipment.make}</h3>
                         <h3>{equipment.model}</h3>
                         <p>Notes: {equipment.notes}</p>
                     </CardBody>
-                    <div>
-                        <Link to={`/Equipment/edit/${equipment.id}`}>
-                            <button className="btn btn-primary">Edit</button>
-                        </Link>
+                    <div className="buttons-row">
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push(`/Equipment/edit/${equipment.id}`)}>Edit</Button>
 
-                        <button type="button" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</button>
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</Button>
 
-                        <Link to={`/Equipment`}>
-                            <button className="btn btn-primary">Back to Equipment</button>
-                        </Link>
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push("/Equipment")}>All Equipment</Button>
                     </div>
                 </Card>
             </>
@@ -56,7 +52,7 @@ export const EquipmentDetails = () => {
         return (
             <>
                 <Card>
-                    <img src={equipment.image} alt={`"a ${equipment.type}"`} />
+                    <img src={equipment.image} style={{ width: '50em' }} alt={`"a ${equipment.type}"`} />
                     <CardBody>
                         <h3>{equipment.type}</h3>
                         <h3>{equipment.make}</h3>
@@ -64,16 +60,12 @@ export const EquipmentDetails = () => {
                         <p>Hours: {equipment.hours}</p>
                         <p>Notes: {equipment.notes}</p>
                     </CardBody>
-                    <div>
-                        <Link to={`/Equipment/edit/${equipment.id}`}>
-                            <button className="btn btn-primary">Edit</button>
-                        </Link>
+                    <div className="buttons-row">
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push(`/Equipment/edit/${equipment.id}`)}>Edit</Button>
 
-                        <button type="button" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</button>
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => handleDeleteEquipment(equipment.id)}>Delete</Button>
 
-                        <Link to={`/Equipment`}>
-                            <button className="btn btn-primary">Back to Equipment</button>
-                        </Link>
+                        <Button type="button" id="greenButton" className="btn btn-primary" onClick={() => history.push("/Equipment")}>All Equipment</Button>
                     </div>
                 </Card>
             </>
