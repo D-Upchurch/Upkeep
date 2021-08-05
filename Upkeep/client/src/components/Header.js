@@ -14,24 +14,17 @@ export default function Header({ isLoggedIn }) {
     return (
         <div>
             <Navbar className="navColor" light expand="md">
-                <NavbarBrand className="navPadding" tag={RRNavLink} to="/">Upkeep</NavbarBrand>
+                <NavbarBrand className="navPadding" tag={RRNavLink} to="/Home">Upkeep</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
+
+
                     <Nav className="mr-auto" navbar>
-                        { /* When isLoggedIn === true, we will render the Home link */}
                         {isLoggedIn &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                                    <NavLink tag={RRNavLink} to="/Home">Home</NavLink>
                                 </NavItem>
-                            </>
-                        }
-
-                    </Nav>
-
-                    <Nav navbar>
-                        {isLoggedIn &&
-                            <>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Property">Properties</NavLink>
                                 </NavItem>
