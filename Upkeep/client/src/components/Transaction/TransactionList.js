@@ -17,7 +17,6 @@ export const TransactionList = () => {
     };
 
 
-
     const handleSearch = (event) => {
         event.preventDefault();
         let selectedVal = event.target.value
@@ -52,18 +51,47 @@ export const TransactionList = () => {
         history.push('/Transaction/Create')
     };
 
-    // const handleGains = () => {
-    //     let gainPrice = 0
-    //     for (const transaction in transactions) {
-    //         let singleGain = 0
-    //         if (transaction.type === 1) {
-    //             let singleGain = ${ transaction.price }
-    //         }
-    //         ${ gainPrice } += ${ singleGain }
-    //     }
-    //     console.log(gainPrice)
-    //     return gainPrice
-    // }
+    //! handles adding up the payments from transactions
+    const payments = transactions.map(obj => {
+        if (obj.type === 1) {
+            return obj.price
+        }
+        else if (obj.type === 0) {
+            return 0
+        }
+    });
+
+    let sumPayments = 0;
+    for (let i = 0; i < payments.length; i++) {
+        sumPayments += payments[i];
+    }
+
+    //! handles adding up the expenses from transactions
+    const expenses = transactions.map(obj => {
+        if (obj.type === 0) {
+            return obj.price
+        }
+        else if (obj.type === 1) {
+            return 0
+        }
+    });
+
+    let sumExpenses = 0;
+    for (let i = 0; i < expenses.length; i++) {
+        sumExpenses += expenses[i];
+    }
+
+    //! handles getting the net total of transactions
+    let sumGain = 0;
+    let sumLoss = 0;
+    if (sumPayments > sumExpenses) {
+        sumGain = (sumPayments - sumExpenses)
+    }
+    else if (sumExpenses > sumPayments) {
+        sumLoss = (sumExpenses - sumPayments)
+    }
+
+
 
     useEffect(() => {
         fetchTransactions();
@@ -83,36 +111,68 @@ export const TransactionList = () => {
         )
     }
     else {
-
-        return (
-            <>
-                <h2 className="List-header">My Transactions</h2>
-                <div className="List-top-row">
-                    <Button id="greenButton" className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</Button>
-                    <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
-                    <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
-                </div>
-                <div className="transaction-filter-buttons">
-                    <Button id="greenButton" className="btn btn-primary" onClick={handleFilterWeekly}>Last 7 Days</Button>
-                    <Button id="greenButton" className="btn btn-primary" onClick={handleFilterMonthly}>Last Month</Button>
-                    <Button id="greenButton" className="btn btn-primary" onClick={fetchTransactions}>Reset</Button>
-                </div>
-                <br />
-                <div>
-                    <h4>Gains: </h4>
-                    <h4>Losses: </h4>
-                    <h4>Net Total: </h4>
-                </div>
-                <div className="container">
-                    <div className="row justify-content-center">
-
-                        {transactions.map((transaction) => (
-                            <Transaction transaction={transaction} key={transaction.id} handleDeleteTransaction={handleDeleteTransaction} />
-                        ))}
+        if (sumPayments > sumExpenses) {
+            return (
+                <>
+                    <h2 className="List-header">My Transactions</h2>
+                    <div className="List-top-row">
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</Button>
+                        <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
+                        <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
                     </div>
-                </div>
-            </>
-        )
+                    <div className="transaction-filter-buttons">
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleFilterWeekly}>Last 7 Days</Button>
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleFilterMonthly}>Last Month</Button>
+                        <Button id="greenButton" className="btn btn-primary" onClick={fetchTransactions}>Reset</Button>
+                    </div>
+                    <br />
+                    <div className="transaction-totals">
+                        <h4 id="greenText">Gains:+ ${sumPayments}</h4>
+                        <h4 id="redText">Losses:- ${sumExpenses}</h4>
+                        <h4 id="greenText">Net Total:+ ${sumGain} </h4>
+                    </div>
+                    <div className="container">
+                        <div className="row justify-content-center">
+
+                            {transactions.map((transaction) => (
+                                <Transaction transaction={transaction} key={transaction.id} handleDeleteTransaction={handleDeleteTransaction} />
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )
+        } else if (sumExpenses > sumPayments) {
+            return (
+                <>
+                    <h2 className="List-header">My Transactions</h2>
+                    <div className="List-top-row">
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleAddTransaction}>Add Transaction</Button>
+                        <Input className="reduce-search-width" type="text" onChange={handleSearch}></Input>
+                        <Button id="greenButton" className="btn btn-primary" onClick={fetchSearch}>Search</Button>
+                    </div>
+                    <div className="transaction-filter-buttons">
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleFilterWeekly}>Last 7 Days</Button>
+                        <Button id="greenButton" className="btn btn-primary" onClick={handleFilterMonthly}>Last Month</Button>
+                        <Button id="greenButton" className="btn btn-primary" onClick={fetchTransactions}>Reset</Button>
+                    </div>
+                    <br />
+                    <div className="transaction-totals">
+                        <h4 id="greenText">Gains:+ ${sumPayments}</h4>
+                        <h4 id="redText">Losses:- ${sumExpenses}</h4>
+                        <h4 id="redText">Net Total:- ${sumLoss} </h4>
+                    </div>
+                    <div className="container">
+                        <div className="row justify-content-center">
+
+                            {transactions.map((transaction) => (
+                                <Transaction transaction={transaction} key={transaction.id} handleDeleteTransaction={handleDeleteTransaction} />
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )
+        }
+
     }
 
 };

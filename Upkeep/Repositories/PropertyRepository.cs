@@ -25,6 +25,7 @@ namespace Upkeep.Repositories
                     FROM Property p
                     LEFT JOIN [User] u ON p.userId = u.[Id]
                     WHERE u.firebaseUserId = @firebaseUserId
+                    ORDER BY p.lastService DESC
                     ";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
@@ -202,6 +203,58 @@ namespace Upkeep.Repositories
 
                     DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    var reader = cmd.ExecuteReader();
+
+                    var properties = new List<Property>();
+
+                    while (reader.Read())
+                    {
+                        properties.Add(new Property()
+                        {
+                            Id = DbUtils.GetInt(reader, "id"),
+                            Name = DbUtils.GetString(reader, "name"),
+                            Address = DbUtils.GetString(reader, "address"),
+                            ServiceCharge = DbUtils.GetInt(reader, "serviceCharge"),
+                            LastService = DbUtils.GetDateTime(reader, "lastService"),
+                            Notes = DbUtils.GetNullableString(reader, "notes"),
+                            Image = DbUtils.GetString(reader, "image"),
+                            UserId = DbUtils.GetInt(reader, "userId"),
+                            User = new User()
+                            {
+                                Id = DbUtils.GetInt(reader, "UsersId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "email"),
+                                Phone = DbUtils.GetString(reader, "phone"),
+                                FirebaseUserId = DbUtils.GetString(reader, "firebaseUserId")
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return properties;
+                }
+            }
+        }
+
+        public List<Property> FilterProperties(string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT p.id, p.[name], p.address, p.serviceCharge, p.lastService, p.notes, p.image, p.userId,
+                           u.Id AS UsersId, u.[Name] as UserName, u.email, u.phone, u.firebaseUserId
+                    FROM Property p
+                    LEFT JOIN [User] u ON p.userId = u.[Id]
+                    WHERE (p.lastService <= DATEADD(d, -7, GETDATE())) AND (u.firebaseUserId = @firebaseUserId)
+                    ORDER BY p.lastService ASC
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+
                     var reader = cmd.ExecuteReader();
 
                     var properties = new List<Property>();

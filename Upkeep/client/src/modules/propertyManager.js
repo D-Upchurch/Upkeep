@@ -79,6 +79,23 @@ export const editProperty = (property) => {
     })
 };
 
+export const filterProperties = () => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/filterProperties`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Something went wrong :(")
+            }
+        })
+    })
+}
+
 export const searchProperties = (input) => {
     return getToken().then((token) => {
         return fetch(`${baseUrl}/search?criterion=${input}`, {

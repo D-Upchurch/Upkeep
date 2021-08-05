@@ -53,6 +53,13 @@ namespace Upkeep.Controllers
             return Ok(properties);
         }
 
+        [HttpGet("filterProperties")]
+        public IActionResult FilterProperties()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_propertyRepo.FilterProperties(currentUserProfile.FirebaseUserId));
+        }
+
         [HttpPost]
         public IActionResult Post(Property property)
         {
